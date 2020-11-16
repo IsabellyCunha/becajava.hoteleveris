@@ -8,8 +8,25 @@ import br.hoteleveris.app.model.Cliente;
 public class ClienteList extends BaseResponse {
 
     private List<Cliente> Clientes;
+    
+    
+    public ClienteList() {
+	}
+    
 
-    public List<Cliente> getClientes() {
+	public ClienteList(int statusCode, String message) {
+		super(statusCode, message);
+		this.setMessage(message);
+		this.setStatusCode(statusCode);
+	}
+
+
+	public ClienteList(List<Cliente> clientes) {
+		super();
+		Clientes = clientes;
+	}
+
+	public List<Cliente> getClientes() {
         return Clientes;
     }
 

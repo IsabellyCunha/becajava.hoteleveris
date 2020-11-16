@@ -1,5 +1,7 @@
 package br.hoteleveris.app.request;
 
+import java.util.UUID;
+
 public class ClienteRequest {
 	private String nome;
 	private String cpf;
@@ -18,7 +20,8 @@ public class ClienteRequest {
 		this.cpf = cpf;
 	}
 	public String getHash() {
-		return hash;
+		hash = UUID.randomUUID().toString().substring(0, 16);
+		return hash.replace("-", "");
 	}
 	public void setHash(String hash) {
 		this.hash = hash;

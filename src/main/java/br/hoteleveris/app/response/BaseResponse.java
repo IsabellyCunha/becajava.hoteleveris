@@ -1,10 +1,30 @@
 package br.hoteleveris.app.response;
 
-import javax.persistence.Transient;
-
 public class BaseResponse {
-	@Transient
-	public int StatusCode;
-	@Transient
-	public String Message;
+	private int StatusCode;
+	private String Message;
+	
+	public BaseResponse() {
+		
+	}
+	
+	public BaseResponse(int statusCode, String message) {
+		StatusCode = statusCode;
+		Message = message;
+	}
+	public int getStatusCode() {
+		return StatusCode;
+	}
+	public void setStatusCode(int statusCode) {
+		StatusCode = statusCode;
+	}
+	public String getMessage() {
+		return Message;
+	}
+	public void setMessage(String message) {
+		Message = message;
+	}
+	
+	
+	
 }

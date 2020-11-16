@@ -15,7 +15,22 @@ public class Quarto {
 	private int andar;
 	private int noQuarto;
 	private String situacao;
-	
+
+	public Quarto() {
+	}
+
+	public Quarto(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public Quarto(int andar, int noQuarto, String situacao, TipoQuarto tipoQuarto) {
+		this.andar = andar;
+		this.noQuarto = noQuarto;
+		this.situacao = situacao;
+		this.tipoQuarto = tipoQuarto;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "tipoQuartoId")
 	private TipoQuarto tipoQuarto;
@@ -59,9 +74,5 @@ public class Quarto {
 	public void setTipoQuarto(TipoQuarto tipoQuarto) {
 		this.tipoQuarto = tipoQuarto;
 	}
-	
-	
-	
-	
 
 }

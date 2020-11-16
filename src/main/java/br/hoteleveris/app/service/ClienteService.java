@@ -15,113 +15,91 @@ import br.hoteleveris.app.request.ClienteList;
 import br.hoteleveris.app.response.ClienteResponse;
 
 @Service
-public class ClienteService extends BaseResponse{
+public class ClienteService{
 	
-	final ClienteRepository _repository;
-		
 	@Autowired
-	public ClienteService(ClienteRepository repository) {
-		_repository = repository;
-	}
+	private ClienteRepository repository;		
 	
-	public BaseResponse inserir(ClienteRequest clienteRequest) {
-		Cliente cliente = new Cliente();
-		BaseResponse base = new BaseResponse();
-		base.StatusCode = 400;
+	
+	public BaseResponse inserir(ClienteRequest request) {
 		
-		if(clienteRequest.getNome().trim().equals("") || clienteRequest.getNome().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um cliente com dados escritos string
-			base.Message = "O nome do cliente deve ser preenchido";
-			return base;
+		if(request.getNome().trim().equals("") || request.getNome().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um cliente com dados escritos string
+			return new BaseResponse(400, "O nome do cliente deve ser preenchido");
 		}
-		if(clienteRequest.getCpf().trim().equals("") || clienteRequest.getCpf().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um cliente com dados escritos string
-			base.Message = "O CPF do cliente deve ser preenchido";
-			return base;
+		if(request.getCpf().trim().equals("") || request.getCpf().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um cliente com dados escritos string
+			return new BaseResponse (400, "O CPF do cliente deve ser preenchido");
+			
 		}
-		if(clienteRequest.getHash().trim().equals("") || clienteRequest.getHash().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um cliente com dados escritos string
-			base.Message = "O hash do cliente deve ser preenchido";
-			return base;
+		if(request.getHash().trim().equals("") || request.getHash().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um cliente com dados escritos string
+			return new BaseResponse(400, "O hash do cliente deve ser preenchido");
+			
 		}
+		Cliente cliente = new Cliente(request.getNome(), request.getCpf(), request.getHash());
+		repository.save(cliente);
+		return new BaseResponse(201, "Cliente inserido com sucesso.");
 		
-		cliente.setNome(clienteRequest.getNome());
-		cliente.setCpf(clienteRequest.getCpf());
-		cliente.setHash(clienteRequest.getHash());
-		
-		_repository.save(cliente);
-		
-		base.StatusCode = 201;
-		base.Message = "Cliente inserido com sucesso.";
-		return base;
 	}
 	
 	public ClienteResponse obter(Long id) {
-		Optional<Cliente> cliente = _repository.findById(id);
 		ClienteResponse response = new ClienteResponse();
-
-		if (cliente == null) {
-			response.Message = "Cliente não encontrado";
-			response.StatusCode = 404;
-			return response;
-		}
-
+		
+		Optional<Cliente> cliente = repository.findById(id);
+		
+		if (repository.existsById(id) == false) {
+			return new ClienteResponse(400, "Esse cliente não existe!");			
+		}		
+		
+		
+		response.setId(cliente.get().getId());
 		response.setNome(cliente.get().getNome());
 		response.setCpf(cliente.get().getCpf());
-		response.setId(cliente.get().getId());
-		response.Message = "Cliente obtido com sucesso";
-		response.StatusCode = 200;
+		response.setStatusCode(200);
+		response.setMessage("Cliente obtido com sucesso!");
+
 		return response;
 	}
 
 	public ClienteList listar() {
-		List<Cliente> lista = _repository.findAll();
+		List<Cliente> lista = repository.findAll();
 
 		ClienteList response = new ClienteList();
 		response.setClientes(lista);
-		response.StatusCode = 200;
-		response.Message = "Clientes obtidos com sucesso.";
+		response.setStatusCode(200);
+		response.setMessage("Clientes obtidos com sucesso.");
 
 		return response;
     }
 
 	public BaseResponse atualizar(Long id, ClienteRequest clienteRequest) {
-		Cliente cliente = new Cliente();
-		BaseResponse base = new BaseResponse();
-		base.StatusCode = 400;
 
+		Cliente cliente = new Cliente();
+		
 		if (clienteRequest.getNome().trim().equals("") || clienteRequest.getNome().equals("string")) {
-			base.Message = "O nome do cliente não foi preenchido.";
-			return base;
+			return new BaseResponse(400, "O nome do cliente não foi preenchido.");
 		}
 		if (clienteRequest.getCpf().trim().equals("") || clienteRequest.getCpf().equals("string")) {
-			base.Message = "O CPF do cliente não foi preenchido.";
-			return base;
+			return new BaseResponse(400, "O CPF do cliente não foi preenchido.");
 		}
 		if (clienteRequest.getHash().trim().equals("") || clienteRequest.getHash().equals("string")) {
-			base.Message = "O hash do cliente não foi preenchido.";
-			return base;
+			return new BaseResponse(400, "O Hash do cliente não foi preenchido.");
 		}
 
 		cliente.setId(id);
 		cliente.setNome(clienteRequest.getNome());
 		cliente.setCpf(clienteRequest.getCpf());
 		cliente.setHash(clienteRequest.getHash());
-
-		_repository.save(cliente);
-		base.StatusCode = 200;
-		base.Message = "Cliente atualizado com sucesso.";
-		return base;
+		repository.save(cliente);
+		return new BaseResponse(201, "Cliente atualizado com sucesso.");
 	}
 
 	public BaseResponse deletar(Long id) {
 		BaseResponse response = new BaseResponse();
 
-		if (id == null || id == 0) {
-			response.StatusCode = 400;
-			return response;
+		if (repository.existsById(id) == false) {
+			return new BaseResponse(400, "Cliente inválido!");
 		}
 
-		_repository.deleteById(id);
-		response.StatusCode = 200;
-		response.Message = "Cliente excluído com sucesso";
-		return response;
+		repository.deleteById(id);
+		return new BaseResponse(201, "Cliente excluído!");
 	}
 }

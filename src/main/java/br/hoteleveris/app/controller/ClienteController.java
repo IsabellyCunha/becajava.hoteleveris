@@ -33,9 +33,10 @@ public class ClienteController extends BaseController{
 	public ResponseEntity inserir(@RequestBody ClienteRequest clienteRequest) {
 		try {
 			BaseResponse response = _service.inserir(clienteRequest);
-			return ResponseEntity.status(response.StatusCode).body(response);
-		}catch(Exception e) {
-			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
+		} catch (Exception e){
+			return ResponseEntity.status(500).body("Erro do servidor!");
+			
 		}
 	}
 	
@@ -43,9 +44,9 @@ public class ClienteController extends BaseController{
 	public ResponseEntity obter(@PathVariable Long id) {
 		try {
 			ClienteResponse response = _service.obter(id);
-			return ResponseEntity.status(response.StatusCode).body(response);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
 		} catch (Exception e) {
-			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
+			return ResponseEntity.status(errorBase.getStatusCode()).body(errorBase);
 		}
 	}
 
@@ -55,7 +56,7 @@ public class ClienteController extends BaseController{
 			ClienteList clientes = _service.listar();
 			return ResponseEntity.status(HttpStatus.OK).body(clientes);
 		} catch (Exception e) {
-			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
+			return ResponseEntity.status(errorBase.getStatusCode()).body(errorBase);
 		}
 	}
 
@@ -63,9 +64,9 @@ public class ClienteController extends BaseController{
 	public ResponseEntity deletar(@PathVariable Long id) {
 		try {
 			BaseResponse response = _service.deletar(id);
-			return ResponseEntity.status(response.StatusCode).build();
+			return ResponseEntity.status(response.getStatusCode()).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
+			return ResponseEntity.status(errorBase.getStatusCode()).body(errorBase);
 		}
 	}
 
@@ -73,9 +74,9 @@ public class ClienteController extends BaseController{
 	public ResponseEntity atualizar(@RequestBody ClienteRequest clienteRequest, @PathVariable Long id) {
 		try {
 			BaseResponse response = _service.atualizar(id, clienteRequest);
-			return ResponseEntity.status(response.StatusCode).body(response);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
 		} catch (Exception e) {
-			return ResponseEntity.status(errorBase.StatusCode).body(errorBase);
+			return ResponseEntity.status(errorBase.getStatusCode()).body(errorBase);
 		}
 	}
 	

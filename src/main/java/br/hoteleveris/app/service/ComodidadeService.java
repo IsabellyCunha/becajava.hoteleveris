@@ -14,46 +14,34 @@ import br.hoteleveris.app.response.BaseResponse;
 import br.hoteleveris.app.response.ComodidadeResponse;
 
 @Service
-public class ComodidadeService extends BaseResponse{
-	final ComodidadeRepository _repository;
-	
+public class ComodidadeService extends BaseResponse {
 	@Autowired
-	public ComodidadeService(ComodidadeRepository repository) {
-		_repository = repository;
+	ComodidadeRepository _repository;
+
+	public BaseResponse inserir(ComodidadeRequest comodidadeRequest) { 
+  
+	if(comodidadeRequest.getNome().trim().equals("") || comodidadeRequest.getNome().equals("string")) {//no swagger, por padrao, o  "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um comodidade com dados escritos string 
+		return new BaseResponse (400, "O nome da comodidade deve ser preenchido");
+		
 	}
 	
-	public BaseResponse inserir(ComodidadeRequest comodidadeRequest) {
-		Comodidade comodidade = new Comodidade();
-		BaseResponse base = new BaseResponse();
-		base.StatusCode = 400;
-		
-		if(comodidadeRequest.getNome().trim().equals("") || comodidadeRequest.getNome().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um comodidade com dados escritos string
-			base.Message = "O nome da comodidade deve ser preenchido";
-			return base;
-		}
-		
-		comodidade.setNome(comodidadeRequest.getNome());
-		
-		_repository.save(comodidade);
-		
-		base.StatusCode = 201;
-		base.Message = "Comodidade inserida com sucesso.";
-		return base;
-	}
+	return new BaseResponse(200, "Comodidade inserida com sucesso.");
 	
+}
+
 	public ComodidadeResponse obter(Long id) {
 		Optional<Comodidade> comodidade = _repository.findById(id);
 		ComodidadeResponse response = new ComodidadeResponse();
 
 		if (comodidade == null) {
-			response.Message = "Comodidade não encontrado";
-			response.StatusCode = 404;
+			response.setMessage("Comodidade não encontrado");
+			response.setStatusCode(404);
 			return response;
 		}
 
 		response.setNome(comodidade.get().getNome());
-		response.Message = "Comodidade obtido com sucesso";
-		response.StatusCode = 200;
+		response.setMessage("Comodidade obtido com sucesso");
+		response.setStatusCode(200);
 		return response;
 	}
 
@@ -62,42 +50,43 @@ public class ComodidadeService extends BaseResponse{
 
 		ComodidadeList response = new ComodidadeList();
 		response.setComodidades(lista);
-		response.StatusCode = 200;
-		response.Message = "Comodidades obtidos com sucesso.";
+		response.setStatusCode(200);
+		response.setMessage("Comodidades obtidos com sucesso.");
 
 		return response;
-    }
+	}
 
 	public BaseResponse atualizar(Long id, ComodidadeRequest comodidadeRequest) {
-		Comodidade comodidade = new Comodidade();
-		BaseResponse base = new BaseResponse();
-		base.StatusCode = 400;
-
-		if(comodidadeRequest.getNome().trim().equals("") || comodidadeRequest.getNome().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um comodidade com dados escritos string
-			base.Message = "O nome da comodidade não foi preenchida.";
-			return base;
+		Comodidade comodidade = new Comodidade(); 
+		BaseResponse base = new BaseResponse(); 
+		base.setStatusCode(400);
+  
+		if(comodidadeRequest.getNome().trim().equals("") ||
+			comodidadeRequest.getNome().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido  no banco um comodidade com dados escritos string 
+			base.setMessage("O nome da comodidade não foi preenchida."); 
+			return base; 
 		}
-
-		comodidade.setId(id);
-		comodidade.setNome(comodidadeRequest.getNome());
-
-		_repository.save(comodidade);
-		base.StatusCode = 200;
-		base.Message = "Comodidade atualizada com sucesso.";
-		return base;
-	}
+  
+  comodidade.setId(id); 
+  comodidade.setNome(comodidadeRequest.getNome());
+  
+  _repository.save(comodidade); 
+  base.setStatusCode(200); 
+  base.setMessage("Comodidade atualizada com sucesso."); 
+  return base; 
+  }
 
 	public BaseResponse deletar(Long id) {
 		BaseResponse response = new BaseResponse();
 
 		if (id == null || id == 0) {
-			response.StatusCode = 400;
+			response.setStatusCode(400);
 			return response;
 		}
 
 		_repository.deleteById(id);
-		response.StatusCode = 200;
-		response.Message = "Comodidade excluída com sucesso";
+		response.setStatusCode(200);
+		response.setMessage("Comodidade excluída com sucesso");
 		return response;
 	}
 }

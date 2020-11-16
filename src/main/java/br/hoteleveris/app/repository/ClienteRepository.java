@@ -10,4 +10,8 @@ import br.hoteleveris.app.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	Optional<Cliente> findById(Long id);
+	
+	@Override
+	 boolean existsById(Long id);
+	
 }

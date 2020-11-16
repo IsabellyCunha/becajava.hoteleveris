@@ -5,6 +5,20 @@ public class ClienteResponse extends BaseResponse{
 	private String nome;
 	private String cpf;
 	
+	public ClienteResponse() {
+		
+	}
+	
+	public ClienteResponse(int statusCode, String message) {
+		super();
+		setStatusCode(statusCode);
+		setMessage(message);
+	}
+	public ClienteResponse(int statusCode, String message, String nome, String cpf) {
+		super(statusCode, message);
+		this.nome = nome;
+		this.cpf = cpf;
+	}
 	public Long getId() {
 		return id;
 	}

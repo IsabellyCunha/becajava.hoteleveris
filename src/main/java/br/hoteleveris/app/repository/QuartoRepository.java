@@ -5,10 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.hoteleveris.app.model.TipoQuarto;
+import br.hoteleveris.app.model.Quarto;
 
 @Repository
-public interface TipoQuartoRepository extends JpaRepository<TipoQuarto, Long>{
-	Optional<TipoQuarto> findById(Long id);
+public interface QuartoRepository extends JpaRepository<Quarto, Long>{
+	Optional<Quarto> findByNoQuarto(int noQuarto);
 	
+	boolean existsByNoQuarto(int andar);
 }

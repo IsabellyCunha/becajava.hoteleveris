@@ -15,12 +15,17 @@ public class ComodidadeQuarto {
 	
 	@ManyToOne
 	@JoinColumn(name = "quartoId")
-	private Quarto Quarto;
+	private Quarto quarto;
 	
 	@ManyToOne
 	@JoinColumn(name = "comodidadeId")
-	private Comodidade Comodidade;
+	private Comodidade comodidade;
 
+	public ComodidadeQuarto(Quarto quarto, Comodidade comodidade) {
+		this.quarto = quarto;
+		this.comodidade = comodidade;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -30,19 +35,19 @@ public class ComodidadeQuarto {
 	}
 
 	public Quarto getQuarto() {
-		return Quarto;
+		return quarto;
 	}
 
 	public void setQuarto(Quarto quarto) {
-		Quarto = quarto;
+		this.quarto = quarto;
 	}
 
 	public Comodidade getComodidade() {
-		return Comodidade;
+		return comodidade;
 	}
 
 	public void setComodidade(Comodidade comodidade) {
-		Comodidade = comodidade;
+		this.comodidade = comodidade;
 	}
 	
 	
