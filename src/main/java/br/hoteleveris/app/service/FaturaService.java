@@ -39,12 +39,12 @@ public class FaturaService {
 		for (Ocupacao ocupacao : lista) {
 			double valor = ocupacao.getQuarto().getTipoQuarto().getValor() * ocupacao.getQtdeDiarias();
 
-			TransferenciaRequest transferencia = new TransferenciaRequest();
-			transferencia.setHashDestino(hashContaHotel);
-			transferencia.setHashOrigem(ocupacao.getCliente().getHash());
-			transferencia.setValor(valor);
+			TransferenciaRequest objtransferencia = new TransferenciaRequest();
+			objtransferencia .setHashDestino(hashContaHotel);
+			objtransferencia .setHashOrigem(ocupacao.getCliente().getHash());
+			objtransferencia .setValor(valor);
 
-			BaseResponse response = restTemplate.postForObject(uri, transferencia, BaseResponse.class);
+			BaseResponse response = restTemplate.postForObject(uri, objtransferencia , BaseResponse.class);
 
 			ocupacao.setSituacao("P");
 			ocupacaoRepository.save(ocupacao);

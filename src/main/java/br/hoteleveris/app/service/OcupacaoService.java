@@ -38,7 +38,7 @@ public class OcupacaoService {
         Quarto quarto = new Quarto(request.getQuarto().getId());
 
         Ocupacao ocupacao = new Ocupacao(
-        		request.getData(),  
+        		request.getData(),
         		request.getQtdeDiarias(),                             
                 request.getSituacao(),
                 cliente,
@@ -46,6 +46,6 @@ public class OcupacaoService {
                 );
 
         _repository.save(ocupacao);
-        return new BaseResponse(201, "Novo cliente salvo com sucesso!");
+        return new BaseResponse(201, "Nova ocupação salva com sucesso!");
     }
 }

@@ -1,22 +1,22 @@
 package br.hoteleveris.app.request;
 
-import java.util.Date;
+
 
 import br.hoteleveris.app.model.Cliente;
 import br.hoteleveris.app.model.Quarto;
 
 public class OcupacaoRequest {
-	private Date data;
+	private String data;
 	private int qtdeDiarias;
 	private String situacao;
 	private Cliente cliente;
 	private Quarto quarto;
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
@@ -33,7 +33,7 @@ public class OcupacaoRequest {
 	}
 
 	public void setSituacao(String situacao) {
-		this.situacao = situacao;
+		this.situacao = "N";
 	}
 
 	public Cliente getCliente() {
