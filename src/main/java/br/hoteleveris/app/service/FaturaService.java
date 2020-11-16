@@ -19,14 +19,6 @@ public class FaturaService {
 	@Autowired
 	private OcupacaoRepository ocupacaoRepository;
 
-	@Autowired
-	private ClienteRepository clienteRepository;
-
-	@Autowired
-	private TipoQuartoRepository tipoQuartoRepository;
-
-	@Autowired
-	private QuartoRepository quartoRepository;
 
 	private String hashContaHotel = "123456";
 
@@ -39,12 +31,12 @@ public class FaturaService {
 		for (Ocupacao ocupacao : lista) {
 			double valor = ocupacao.getQuarto().getTipoQuarto().getValor() * ocupacao.getQtdeDiarias();
 
-			TransferenciaRequest objtransferencia = new TransferenciaRequest();
-			objtransferencia .setHashDestino(hashContaHotel);
-			objtransferencia .setHashOrigem(ocupacao.getCliente().getHash());
-			objtransferencia .setValor(valor);
+			TransferenciaRequest transferencia = new TransferenciaRequest();
+			transferencia.setHashDestino(hashContaHotel);
+			transferencia.setHashOrigem(ocupacao.getCliente().getHash());
+			transferencia.setValor(valor);
 
-			BaseResponse response = restTemplate.postForObject(uri, objtransferencia , BaseResponse.class);
+			BaseResponse response = restTemplate.postForObject(uri, transferencia, BaseResponse.class);
 
 			ocupacao.setSituacao("P");
 			ocupacaoRepository.save(ocupacao);

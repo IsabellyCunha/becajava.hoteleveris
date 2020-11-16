@@ -10,7 +10,7 @@ import br.hoteleveris.app.service.FaturaService;
 
 @RestController
 @RequestMapping("/fatura")
-public class FaturaController {
+public class FaturaController extends BaseController{
 	
 	@Autowired
 	private FaturaService _service;
