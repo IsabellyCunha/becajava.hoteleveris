@@ -14,6 +14,13 @@ public class Cliente {
 	private String cpf;
 	private String hash;
 	
+	
+	
+	public Cliente(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Cliente() {
 		
 	}

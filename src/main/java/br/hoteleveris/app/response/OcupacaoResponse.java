@@ -1,49 +1,31 @@
-package br.hoteleveris.app.model;
+package br.hoteleveris.app.response;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-@Entity
-public class Ocupacao {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+import br.hoteleveris.app.model.Cliente;
+import br.hoteleveris.app.model.Quarto;
+
+public class OcupacaoResponse extends BaseResponse{
 	private Long id;
 	private Date data;
 	private int qtdeDiarias;
 	private String situacao;
-	
-	public Ocupacao() {
-		super();
+	private Cliente cliente;
+	private Quarto quarto;
+
+	public OcupacaoResponse() {
 	}
 
-	public Ocupacao(Long id) {
+	public OcupacaoResponse(Long id, Date data, int qtdeDiarias, String situacao, Cliente cliente, Quarto quarto) {
 		super();
 		this.id = id;
-	}
-
-	public Ocupacao(Date data, int qtdeDiarias, String situacao, Cliente cliente, Quarto quarto) {
 		this.data = data;
 		this.qtdeDiarias = qtdeDiarias;
 		this.situacao = situacao;
 		this.cliente = cliente;
 		this.quarto = quarto;
 	}
-
-	@ManyToOne
-	@JoinColumn(name = "clienteId")
-	private Cliente cliente;
-	
-	@ManyToOne
-	@JoinColumn(name = "quartoId")
-	private Quarto quarto;
-
-	
 
 	public Long getId() {
 		return id;
@@ -92,6 +74,4 @@ public class Ocupacao {
 	public void setQuarto(Quarto quarto) {
 		this.quarto = quarto;
 	}
-	
-	
 }
