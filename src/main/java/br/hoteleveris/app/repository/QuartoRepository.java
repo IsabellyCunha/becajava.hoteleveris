@@ -14,6 +14,8 @@ import br.hoteleveris.app.model.Quarto;
 public interface QuartoRepository extends JpaRepository<Quarto, Long>{
 	Optional<Quarto> findByNoQuarto(int noQuarto);
 	
+	Optional<Quarto> findById(Long id);
+	
 	
 	
 

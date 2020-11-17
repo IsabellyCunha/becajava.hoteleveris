@@ -5,6 +5,11 @@ public class TipoQuartoResponse extends BaseResponse{
 	private String descricao;
 	private Double valor;
 	
+	public TipoQuartoResponse() {
+	}
+	public TipoQuartoResponse(int statusCode, String message) {
+		super(statusCode, message);
+	}
 	public Long getId() {
 		return id;
 	}

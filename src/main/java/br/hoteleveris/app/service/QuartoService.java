@@ -6,28 +6,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.hoteleveris.app.model.Cliente;
 import br.hoteleveris.app.model.Comodidade;
 import br.hoteleveris.app.model.ComodidadeQuarto;
 import br.hoteleveris.app.model.Quarto;
 import br.hoteleveris.app.model.TipoQuarto;
 import br.hoteleveris.app.repository.ComodidadeQuartoRepository;
 import br.hoteleveris.app.repository.QuartoRepository;
-import br.hoteleveris.app.request.ClienteList;
 import br.hoteleveris.app.request.ComodidadeRequest;
 import br.hoteleveris.app.request.QuartoList;
 import br.hoteleveris.app.request.QuartoRequest;
+import br.hoteleveris.app.request.SituacaoRequest;
 import br.hoteleveris.app.response.BaseResponse;
 import br.hoteleveris.app.response.QuartoResponse;
 
 @Service
-public class QuartoService {
+public class QuartoService{
 	@Autowired
 	private QuartoRepository repository;
 
 	@Autowired
 	private ComodidadeQuartoRepository comodidadeQuartoRepository;
-
+//insere quartos
 	public BaseResponse inserir(QuartoRequest request) {
 		if (request.getAndar() <= 0) {
 			return new BaseResponse(400, "Preencha o andar");
@@ -62,7 +61,7 @@ public class QuartoService {
 
 		return new BaseResponse(201, "Quarto inserido com sucesso");
 	}
-
+//Pesquisa quartos pelo seu número
 	public QuartoResponse obter(int noQuarto) {
 		QuartoResponse response = new QuartoResponse();
 
@@ -83,7 +82,7 @@ public class QuartoService {
 		return response;
 	}
 
-	
+	//Pesquisa os quartos pelo tipo de quarto
 	  public QuartoList obterPorTipo(Long tipoQuartoId) { 
 		  QuartoList response = new QuartoList();
 	  
@@ -96,6 +95,23 @@ public class QuartoService {
 		  return response;
 	  
 	  }
+	  //Alterar apenas a situação do quarto
+	  public BaseResponse atualizar(Long id, SituacaoRequest request) {	
+
+			Optional<Quarto> quarto = repository.findById(id);
+	 
+			if (request.getSituacao() == null || request.getSituacao() == "" || request.getSituacao().equals("string")) {
+				return new BaseResponse(400, "Preencha a situação do quarto!");
+			} else if (quarto.isEmpty() || id <= 0) {
+				return new BaseResponse(400, "Preencha o ID do quarto a ser atualizado!");
+			}
+
+			quarto.get().setSituacao(request.getSituacao());
+			repository.save(quarto.get());
+
+			return new BaseResponse(200, "Situação do quarto atualizado com sucesso");
+
+		}
 	 
 
 	public QuartoList listar() {

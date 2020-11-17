@@ -13,8 +13,15 @@ public class TipoQuarto {
 	private String descricao;
 	private Double valor;
 
-	public TipoQuarto() {
+	
+	
+	public TipoQuarto(String descricao, Double valor) {
 		super();
+		this.descricao = descricao;
+		this.valor = valor;
+	}
+
+	public TipoQuarto() {
 	}
 	
 	public TipoQuarto(Long id) {

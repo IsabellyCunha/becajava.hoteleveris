@@ -13,85 +13,53 @@ import br.hoteleveris.app.request.TipoQuartoRequest;
 import br.hoteleveris.app.response.BaseResponse;
 import br.hoteleveris.app.response.TipoQuartoResponse;
 
-/*
- * @Service public class TipoQuartoService extends BaseResponse{
- * 
- * final TipoQuartoRepository _repository;
- * 
- * @Autowired public TipoQuartoService(TipoQuartoRepository repository) {
- * _repository = repository; }
- * 
- * public BaseResponse inserir(TipoQuartoRequest tipoQuartoRequest) { TipoQuarto
- * tipoQuarto = new TipoQuarto(); BaseResponse base = new BaseResponse();
- * base.StatusCode = 400;
- * 
- * if(tipoQuartoRequest.getDescricao().trim().equals("") ||
- * tipoQuartoRequest.getDescricao().equals("string")) {//no swagger, por padrao,
- * o "rótulo" dos campos fica com "string" escrito, então impedi que seja
- * inserido no banco um cliente com dados escritos string base.Message =
- * "A descrição do tipo de quarto deve ser preenchido"; return base; }
- * if(tipoQuartoRequest.getValor() == null || tipoQuartoRequest.getValor() <= 0)
- * {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito,
- * então impedi que seja inserido no banco um cliente com dados escritos string
- * base.Message = "Digite um valor válido!"; return base; }
- * 
- * tipoQuarto.setDescricao(tipoQuartoRequest.getDescricao());
- * tipoQuarto.setValor(tipoQuartoRequest.getValor());
- * 
- * _repository.save(tipoQuarto);
- * 
- * base.StatusCode = 201; base.Message = "Tipo de quarto inserido com sucesso.";
- * return base; }
- * 
- * public TipoQuartoResponse obter(Long id) { Optional<TipoQuarto> tipoQuarto =
- * _repository.findById(id); TipoQuartoResponse response = new
- * TipoQuartoResponse();
- * 
- * if (tipoQuarto.get().getId() == null) { response.Message =
- * "Cliente não encontrado"; response.StatusCode = 404; return response; }
- * 
- * response.setDescricao(tipoQuarto.get().getDescricao());
- * response.setValor(tipoQuarto.get().getValor()); response.Message =
- * "Tipo de quarto obtido com sucesso obtido com sucesso"; response.StatusCode =
- * 200; return response; }
- * 
- * public TipoQuartoList listar() { 
- * List<TipoQuarto> lista =  * _repository.findAll();
- * 
- * TipoQuartoList response = new TipoQuartoList();
- * response.setTipoQuartos(lista); response.StatusCode = 200; response.Message =
- * "Tipos de quarto obtidos com sucesso.";
- * 
- * return response; }
- * 
- * public BaseResponse atualizar(Long id, TipoQuartoRequest tipoQuartoRequest) {
- * TipoQuarto tipoQuarto = new TipoQuarto(); BaseResponse base = new
- * BaseResponse(); base.StatusCode = 400;
- * 
- * if(tipoQuartoRequest.getDescricao().trim().equals("") ||
- * tipoQuartoRequest.getDescricao().equals("string")) {//no swagger, por padrao,
- * o "rótulo" dos campos fica com "string" escrito, então impedi que seja
- * inserido no banco um cliente com dados escritos string base.Message =
- * "A descrição do tipo de quarto deve ser preenchido"; return base; }
- * if(tipoQuartoRequest.getValor() == null || tipoQuartoRequest.getValor() <= 0)
- * {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito,
- * então impedi que seja inserido no banco um cliente com dados escritos string
- * base.Message = "Digite um valor válido!"; return base; }
- * 
- * tipoQuarto.setId(id);
- * tipoQuarto.setDescricao(tipoQuartoRequest.getDescricao());
- * tipoQuarto.setValor(tipoQuarto.getValor());
- * 
- * _repository.save(tipoQuarto);
- * 
- * base.StatusCode = 201; base.Message =
- * "Tipo de quarto atualizado com sucesso."; return base; }
- * 
- * public BaseResponse deletar(Long id) { BaseResponse response = new
- * BaseResponse();
- * 
- * if (id == null || id == 0) { response.StatusCode = 400; return response; }
- * 
- * _repository.deleteById(id); response.StatusCode = 200; response.Message =
- * "Tipo de quarto excluído com sucesso"; return response; } }
- */
+@Service
+public class TipoQuartoService extends BaseResponse {
+
+	@Autowired
+	private TipoQuartoRepository repository;
+
+	public BaseResponse inserir(TipoQuartoRequest request) {
+
+		if (request.getDescricao().trim().equals("") || request.getDescricao().equals("string")) {
+			return new BaseResponse(400, "O nome do cliente deve ser preenchido");
+		}
+		if (request.getValor() == null || request.getValor().equals("")) {
+			return new BaseResponse(400, "O valor do quarto deve ser preenchido");
+		}
+		TipoQuarto tipoQuarto = new TipoQuarto(request.getDescricao(), request.getValor());
+		repository.save(tipoQuarto);
+		return new BaseResponse(201, "Tipo de quarto inserido com sucesso.");
+
+	}
+	
+	public TipoQuartoResponse obter(Long id) {
+		TipoQuartoResponse response = new TipoQuartoResponse();
+
+		Optional<TipoQuarto> tipoQuarto = repository.findById(id);
+
+		if (repository.existsById(id) == false) {
+			return new TipoQuartoResponse(404, "Esse tipo de quarto não existe!");
+		}
+		response.setId(tipoQuarto.get().getId());
+		response.setDescricao(tipoQuarto.get().getDescricao());
+		response.setValor(tipoQuarto.get().getValor());
+		response.setStatusCode(200);
+		response.setMessage("Tipo de quarto obtido com sucesso!");
+
+		return response;
+	}
+
+	public TipoQuartoList listar() {
+		List<TipoQuarto> lista = repository.findAll();
+
+		TipoQuartoList response = new TipoQuartoList();
+		response.setTipoQuartos(lista);
+		response.setStatusCode(200);
+		response.setMessage("Tipo Quarto obtidos com sucesso.");
+
+		return response;
+	}
+ 
+
+}

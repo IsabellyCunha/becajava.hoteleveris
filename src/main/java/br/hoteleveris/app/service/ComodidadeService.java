@@ -20,10 +20,12 @@ public class ComodidadeService extends BaseResponse {
 
 	public BaseResponse inserir(ComodidadeRequest comodidadeRequest) { 
   
-	if(comodidadeRequest.getNome().trim().equals("") || comodidadeRequest.getNome().equals("string")) {//no swagger, por padrao, o  "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um comodidade com dados escritos string 
-		return new BaseResponse (400, "O nome da comodidade deve ser preenchido");
-		
-	}
+	if(comodidadeRequest.getNome().trim() == "")   
+		return new BaseResponse (400, "O nome da comodidade deve ser preenchido");	
+	
+	if(comodidadeRequest.getNome().equals("string"))//no swagger, por padrao, o  "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um comodidade com dados escritos string
+		return new BaseResponse (400, "O nome da comodidade deve ser preenchido");	
+	
 	
 	return new BaseResponse(200, "Comodidade inserida com sucesso.");
 	
@@ -33,8 +35,8 @@ public class ComodidadeService extends BaseResponse {
 		Optional<Comodidade> comodidade = _repository.findById(id);
 		ComodidadeResponse response = new ComodidadeResponse();
 
-		if (comodidade == null) {
-			response.setMessage("Comodidade não encontrado");
+		if (id <= 0) {
+			response.setMessage("ID inválido");
 			response.setStatusCode(404);
 			return response;
 		}
