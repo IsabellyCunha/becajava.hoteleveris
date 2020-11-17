@@ -1,5 +1,7 @@
 package br.hoteleveris.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import br.hoteleveris.app.model.Cliente;
 import br.hoteleveris.app.model.Ocupacao;
 import br.hoteleveris.app.model.Quarto;
 import br.hoteleveris.app.repository.OcupacaoRepository;
+import br.hoteleveris.app.request.OcupacaoList;
 import br.hoteleveris.app.request.OcupacaoRequest;
 import br.hoteleveris.app.response.BaseResponse;
 @Service
@@ -48,4 +51,15 @@ public class OcupacaoService {
         _repository.save(ocupacao);
         return new BaseResponse(201, "Nova ocupação salva com sucesso!");
     }
+    
+    public OcupacaoList listar() {
+		List<Ocupacao> lista = _repository.findAll();
+
+		OcupacaoList response = new OcupacaoList();
+		response.setOcupacoes(lista);
+		response.setStatusCode(200);
+		response.setMessage("Clientes obtidos com sucesso.");
+
+		return response;
+	}
 }

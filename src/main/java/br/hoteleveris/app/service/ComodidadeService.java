@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.hoteleveris.app.model.Cliente;
 import br.hoteleveris.app.model.Comodidade;
 import br.hoteleveris.app.repository.ComodidadeRepository;
 import br.hoteleveris.app.request.ComodidadeList;
@@ -26,7 +27,8 @@ public class ComodidadeService extends BaseResponse {
 	if(comodidadeRequest.getNome().equals("string"))//no swagger, por padrao, o  "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido no banco um comodidade com dados escritos string
 		return new BaseResponse (400, "O nome da comodidade deve ser preenchido");	
 	
-	
+	Comodidade comodidade = new Comodidade(comodidadeRequest.getNome());
+	_repository.save(comodidade);
 	return new BaseResponse(200, "Comodidade inserida com sucesso.");
 	
 }
@@ -58,37 +60,4 @@ public class ComodidadeService extends BaseResponse {
 		return response;
 	}
 
-	public BaseResponse atualizar(Long id, ComodidadeRequest comodidadeRequest) {
-		Comodidade comodidade = new Comodidade(); 
-		BaseResponse base = new BaseResponse(); 
-		base.setStatusCode(400);
-  
-		if(comodidadeRequest.getNome().trim().equals("") ||
-			comodidadeRequest.getNome().equals("string")) {//no swagger, por padrao, o "rótulo" dos campos fica com "string" escrito, então impedi que seja inserido  no banco um comodidade com dados escritos string 
-			base.setMessage("O nome da comodidade não foi preenchida."); 
-			return base; 
-		}
-  
-  comodidade.setId(id); 
-  comodidade.setNome(comodidadeRequest.getNome());
-  
-  _repository.save(comodidade); 
-  base.setStatusCode(200); 
-  base.setMessage("Comodidade atualizada com sucesso."); 
-  return base; 
-  }
-
-	public BaseResponse deletar(Long id) {
-		BaseResponse response = new BaseResponse();
-
-		if (id == null || id == 0) {
-			response.setStatusCode(400);
-			return response;
-		}
-
-		_repository.deleteById(id);
-		response.setStatusCode(200);
-		response.setMessage("Comodidade excluída com sucesso");
-		return response;
-	}
 }

@@ -8,13 +8,13 @@ public class QuartoRequest {
 	private String situacao;
 	private Long tipoQuartoId;
 
-	private List<ComodidadeRequest> comodidades;
+	private List<ComodidadeRequestQ> comodidades;
 
-	public List<ComodidadeRequest> getComodidades() {
+	public List<ComodidadeRequestQ> getComodidades() {
 		return comodidades;
 	}
 
-	public void setComodidades(List<ComodidadeRequest> comodidades) {
+	public void setComodidades(List<ComodidadeRequestQ> comodidades) {
 		this.comodidades = comodidades;
 	}
 

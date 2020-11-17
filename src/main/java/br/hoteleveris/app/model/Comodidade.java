@@ -24,6 +24,9 @@ public class Comodidade {
 		this.id = id;
 		this.nome = nome;
 	}
+	public Comodidade(String nome) {
+		this.nome=nome;
+	}
 	public Long getId() {
 		return id;
 	}

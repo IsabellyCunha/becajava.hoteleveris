@@ -12,7 +12,7 @@ import br.hoteleveris.app.model.Quarto;
 import br.hoteleveris.app.model.TipoQuarto;
 import br.hoteleveris.app.repository.ComodidadeQuartoRepository;
 import br.hoteleveris.app.repository.QuartoRepository;
-import br.hoteleveris.app.request.ComodidadeRequest;
+import br.hoteleveris.app.request.ComodidadeRequestQ;
 import br.hoteleveris.app.request.QuartoList;
 import br.hoteleveris.app.request.QuartoRequest;
 import br.hoteleveris.app.request.SituacaoRequest;
@@ -51,7 +51,7 @@ public class QuartoService{
 		Long idQuarto = repository.findByNoQuarto(request.getNoQuarto()).get().getId();
 
 		if (request.getComodidades() != null && request.getComodidades().size() > 0) {
-			for (ComodidadeRequest item : request.getComodidades()) {
+			for (ComodidadeRequestQ item : request.getComodidades()) {
 				ComodidadeQuarto comodidadeQuarto = new ComodidadeQuarto(new Quarto(idQuarto),
 						new Comodidade(item.getId()));
 

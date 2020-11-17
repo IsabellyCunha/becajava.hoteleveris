@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.hoteleveris.app.request.ComodidadeRequest;
+import br.hoteleveris.app.request.ComodidadeRequestQ;
 import br.hoteleveris.app.request.OcupacaoList;
 import br.hoteleveris.app.response.BaseResponse;
 
