@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.hoteleveris.app.model.Cliente;
 import br.hoteleveris.app.model.Ocupacao;
 import br.hoteleveris.app.model.Quarto;
 import br.hoteleveris.app.request.OcupacaoRequest;
@@ -15,22 +16,20 @@ public class OcupacaoTeste {
 
 	@Autowired
 	private OcupacaoService service;
-
+	
 	@Test
-	void inserir() {
-		//Quarto quarto = new Quarto();
-		Ocupacao ocupacao = new Ocupacao();
-		OcupacaoRequest request = new OcupacaoRequest();
-		request.setData("17/11/2020");
-		request.setQtdeDiarias(2);
-		request.setSituacao("N");
-		//request.setQuarto(Qu);
-		request.setCliente(ocupacao.getCliente());
-		
-		BaseResponse response = service.inserir(request);
+	public void camposNulos() {
+	OcupacaoRequest request = new OcupacaoRequest();
+	request.setData(null);
+	request.setQtdeDiarias(0);
+	request.setQuarto(request.getQuarto());
+	request.setCliente(request.getCliente());
+	request.setSituacao("");
 
-		Assertions.assertEquals(201, response.getStatusCode());
-		Assertions.assertEquals("Nova ocupação salva com sucesso!", response.getMessage());
+	BaseResponse response = service.inserir(request);
+	Assertions.assertEquals(400,response.getStatusCode());
 	}
+	
+	
 
 }
