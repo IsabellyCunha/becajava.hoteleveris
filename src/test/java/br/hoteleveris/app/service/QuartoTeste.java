@@ -11,11 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import br.hoteleveris.app.request.ComodidadeRequestQ;
 import br.hoteleveris.app.request.QuartoRequest;
 import br.hoteleveris.app.response.BaseResponse;
+import br.hoteleveris.app.service.imp.QuartoServiceImp;
 
 @SpringBootTest
 public class QuartoTeste {
 	@Autowired
-	private QuartoService service;
+	private QuartoServiceImp service;
 
 
 	@Test

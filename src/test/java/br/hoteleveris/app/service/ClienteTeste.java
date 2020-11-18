@@ -9,12 +9,13 @@ import br.hoteleveris.app.model.Cliente;
 import br.hoteleveris.app.request.ClienteList;
 import br.hoteleveris.app.request.ClienteRequest;
 import br.hoteleveris.app.response.BaseResponse;
+import br.hoteleveris.app.service.imp.ClienteServiceImp;
 
 @SpringBootTest
 public class ClienteTeste {
 
 	@Autowired
-	private ClienteService service;
+	private ClienteServiceImp service;
 
 	@Test
 	void inserir() {

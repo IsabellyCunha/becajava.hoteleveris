@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 import br.hoteleveris.app.request.ClienteList;
 import br.hoteleveris.app.request.ClienteRequest;
 import br.hoteleveris.app.response.BaseResponse;
-import br.hoteleveris.app.service.ClienteService;
 import br.hoteleveris.app.response.ClienteResponse;
+import br.hoteleveris.app.service.imp.ClienteServiceImp;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController extends BaseController{
 
-	private final ClienteService _service;
+	private final ClienteServiceImp _service;
 	
 	@Autowired
-	public ClienteController(ClienteService service) {
+	public ClienteController(ClienteServiceImp service) {
 		_service = service;
 	}
 	

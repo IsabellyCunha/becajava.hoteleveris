@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import br.hoteleveris.app.request.OcupacaoList;
 import br.hoteleveris.app.request.OcupacaoRequest;
 import br.hoteleveris.app.response.BaseResponse;
-import br.hoteleveris.app.service.OcupacaoService;
+import br.hoteleveris.app.service.imp.OcupacaoServiceImp;
 @RestController
 @RequestMapping("/ocupacao")
 public class OcupacaoController extends BaseController  {
 
     @Autowired
-    private OcupacaoService _service;
+    private OcupacaoServiceImp _service;
 
     @PostMapping
     public ResponseEntity inserir(@RequestBody OcupacaoRequest request) {

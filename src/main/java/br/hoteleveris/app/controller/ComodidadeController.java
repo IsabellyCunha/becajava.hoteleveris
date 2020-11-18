@@ -17,15 +17,14 @@ import br.hoteleveris.app.request.ComodidadeRequest;
 import br.hoteleveris.app.request.ComodidadeRequestQ;
 import br.hoteleveris.app.response.BaseResponse;
 import br.hoteleveris.app.response.ComodidadeResponse;
-import br.hoteleveris.app.service.ComodidadeService;
-//import br.hoteleveris.app.service.ComodidadeService;
+import br.hoteleveris.app.service.imp.ComodidadeServiceImp;
 
 @RestController
 
 @RequestMapping("/comodidades")
 public class ComodidadeController extends BaseController {
 	@Autowired
-	private ComodidadeService _service;
+	private ComodidadeServiceImp _service;
 
 	@PostMapping
 	public ResponseEntity inserir(@RequestBody ComodidadeRequest comodidadeRequest) {

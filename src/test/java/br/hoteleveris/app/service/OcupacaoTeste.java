@@ -10,12 +10,13 @@ import br.hoteleveris.app.model.Ocupacao;
 import br.hoteleveris.app.model.Quarto;
 import br.hoteleveris.app.request.OcupacaoRequest;
 import br.hoteleveris.app.response.BaseResponse;
+import br.hoteleveris.app.service.imp.OcupacaoServiceImp;
 
 @SpringBootTest
 public class OcupacaoTeste {
 
 	@Autowired
-	private OcupacaoService service;
+	private OcupacaoServiceImp service;
 	
 	@Test
 	public void camposNulos() {

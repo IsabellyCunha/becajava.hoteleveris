@@ -7,12 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import br.hoteleveris.app.request.TipoQuartoRequest;
 import br.hoteleveris.app.response.BaseResponse;
+import br.hoteleveris.app.service.imp.TipoQuartoServiceImp;
 
 @SpringBootTest
 public class TipoQuartoTeste {
 	
 	@Autowired
-	private TipoQuartoService service;
+	private TipoQuartoServiceImp service;
 	
 	@Test
 	public void inserir() {
